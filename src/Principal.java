@@ -202,20 +202,154 @@ public static void ingresoOConsulta(EmpleadosAdm emp[], Docentes doc[], Alumnos 
 	do {
 		menu = enteroValido("INGRESE LA OPCION DESEADA\n1 - Alumnos\n2 - Docentes\n3 - Empleados Admnistrativos\n4 - Salir", 1, 4);
 		switch (menu) {
-		case (1) : ingresoOConsulta(emp, doc, al); break;
-		case (2) : consultaCuotaAlumno (al); break;
-		case (3) : ingresosYporcentajes (emp, doc, al); break;
-		case (4) : consultaDocentes(doc);
-		case (5) : seguir = false; break;
+		case (1) : ingOConsulAlumnos(al); break;
+		case (2) : ingOConsulDocentes(doc);break;
+		case (3) : ingOConsulEmpleados (emp); break;
+		case (4) : break;
 		}
-	    if (menu < 0 && menu > 6) System.out.println("Error, reingrese una opcion valida:");
+	    if (menu < 1 && menu > 4) System.out.println("Error, reingrese una opcion valida:");
 		
-		seguir = ingresarBooleano("Ingrese SI para volver al menu\nIngrese NO para finalizar");
+		seguir = ingresarBooleano("Ingrese SI para seguir en el menu actual\nIngrese NO para volver al principal");
 		
 	} while (seguir);
 	
 	
 } //Completar
 
-public static void verOModificar ()
-} //Completa
+public static void ingOConsulAlumnos (Alumnos al[]) {
+	Scanner sc = new Scanner(System.in);
+	boolean seguir = true;
+	int pos = -1;
+	
+	do {	   
+	  int opcion = enteroValido("ALUMNOS\nINGRESE LA OPCION DESEADA\n1 - Ver informacion de alumno\n2 - Modificar informacion de alumno", 1, 2);
+
+	  long dniAux = (long)enteroValido("Ingrese el DNI del alumno a modificar", 10000000, 99999999);
+      for (int i=0; i<al.length; i++) {
+    	  if (dniAux == al[i].getDni())
+    		  pos = i;
+      }
+	  
+	   if (opcion == 1 && pos != -1) {//Solo muestra los datos solicitados
+			seguir = false;			
+			System.out.println("Nombre completo: "+al[pos].getNombre()+" "+al[pos].getApellido()+"\nDNI: "+al[pos].getDni()+"\nCuota abonada: $"+al[pos].getCuota());
+			break;
+		  }
+	
+	   else if (opcion == 2 && pos != -1) {//Muestra los datos solicitados, los cambia y los vuelve a mostrar modificados
+		   String nombre, apellido;
+		   long dni;
+		   double cuota;
+		   System.out.println("DATOS A MODIFICAR:\nNombre completo: "+al[pos].getNombre()+" "+al[pos].getApellido()+"\nDNI: "+al[pos].getDni()+"\nCuota abonada: $"+al[pos].getCuota());
+
+		    System.out.println("Ingrese el nuevo nombre del alumno: ");
+		    nombre = sc.nextLine();
+		    al[pos].setNombre(nombre);
+		    System.out.println("Ingrese el nuevo apellido del alumno: ");
+		    apellido = sc.nextLine();
+		    al[pos].setApellido(apellido);
+		    dni = (long)enteroValido("Ingrese el nuevo DNI del alumno: ", 10000000, 99999999);
+		    al[pos].setDni(dni);
+		    cuota = doubleValido("Ingrese el valor de la cuota a abonar: ", 0);	    		   		   
+		    al[pos].setCuota(cuota);
+		    System.out.println("DATOS ACTUALIZADOS:\nNombre completo: "+al[pos].getNombre()+" "+al[pos].getApellido()+"\nDNI: "+al[pos].getDni()+"\nCuota abonada: $"+al[pos].getCuota());
+            seguir = false;
+	   }		  
+		  
+	} while (seguir);	 
+		
+		}
+		
+public static void ingOConsulEmpleados (EmpleadosAdm al[]) {
+	Scanner sc = new Scanner(System.in);
+	boolean seguir = true;
+	int pos = -1;
+	
+	do {	   
+	  int opcion = enteroValido("EMPLEADOS\nINGRESE LA OPCION DESEADA\n1 - Ver informacion de empleado\n2 - Modificar informacion de empleado", 1, 2);
+
+	  long dniAux = (long)enteroValido("Ingrese el DNI del empleado a modificar", 10000000, 99999999);
+      for (int i=0; i<al.length; i++) {
+    	  if (dniAux == al[i].getDni())
+    		  pos = i;
+      }
+	  
+	   if (opcion == 1 && pos != -1) {//Solo muestra los datos solicitados
+			seguir = false;			
+			System.out.println("Nombre completo: "+al[pos].getNombre()+" "+al[pos].getApellido()+"\nDNI: "+al[pos].getDni()+"\nSalario: $"+al[pos].getSalario());
+			break;
+		  }
+	
+	   else if (opcion == 2 && pos != -1) {//Muestra los datos solicitados, los cambia y los vuelve a mostrar modificados
+		   String nombre, apellido;
+		   long dni;
+		   double salario;
+		   System.out.println("DATOS A MODIFICAR:\nNombre completo: "+al[pos].getNombre()+" "+al[pos].getApellido()+"\nDNI: "+al[pos].getDni()+"\nSalario: $"+al[pos].getSalario());
+
+		    System.out.println("Ingrese el nuevo nombre del empleado: ");
+		    nombre = sc.nextLine();
+		    al[pos].setNombre(nombre);
+		    System.out.println("Ingrese el nuevo apellido del empleado: ");
+		    apellido = sc.nextLine();
+		    al[pos].setApellido(apellido);
+		    dni = (long)enteroValido("Ingrese el nuevo DNI del empleado: ", 10000000, 99999999);
+		    al[pos].setDni(dni);
+		    salario = doubleValido("Ingrese el valor de salario a cobrar: ", 0);	    		   		   
+		    al[pos].setSalario(salario);
+		    System.out.println("DATOS ACTUALIZADOS:\nNombre completo: "+al[pos].getNombre()+" "+al[pos].getApellido()+"\nDNI: "+al[pos].getDni()+"\nSalario: $"+al[pos].getSalario());
+            seguir = false;
+	     }	
+       
+       } while(seguir);
+
+}
+
+public static void ingOConsulDocentes (Docentes al[]) {
+	Scanner sc = new Scanner(System.in);
+	boolean seguir = true;
+	int pos = -1;
+	
+	do {	   
+	  int opcion = enteroValido("DOCENTES\nINGRESE LA OPCION DESEADA\n1 - Ver informacion de docente\n2 - Modificar informacion de docente", 1, 2);
+
+	  long dniAux = (long)enteroValido("Ingrese el DNI del docente a modificar", 10000000, 99999999);
+      for (int i=0; i<al.length; i++) {
+    	  if (dniAux == al[i].getDni())
+    		  pos = i;
+      }
+	  
+	   if (opcion == 1 && pos != -1) {//Solo muestra los datos solicitados
+			seguir = false;			
+			System.out.println("Nombre completo: "+al[pos].getNombre()+" "+al[pos].getApellido()+"\nDNI: "+al[pos].getDni()+"\nRemuneracion por hora: $"+al[pos].getValorHora()+"\nTotal de horas de catedra: "+al[pos].getHoras()+"\nSalario: "+al[pos].getSalario());
+			break;
+		  }
+	
+	   else if (opcion == 2 && pos != -1) {//Muestra los datos solicitados, los cambia y los vuelve a mostrar modificados
+		   String nombre, apellido;
+		   long dni;
+		   double vHora;
+		   int horas;
+			System.out.println("DATOS A MODIFICAR\nNombre completo: "+al[pos].getNombre()+" "+al[pos].getApellido()+"\nDNI: "+al[pos].getDni()+"\nRemuneracion por hora: $"+al[pos].getValorHora()+"\nTotal de horas de catedra: "+al[pos].getHoras()+"\nSalario: "+al[pos].getSalario());
+
+		    System.out.println("Ingrese el nuevo nombre del docente: ");
+		    nombre = sc.nextLine();
+		    al[pos].setNombre(nombre);
+		    System.out.println("Ingrese el nuevo apellido del docente: ");
+		    apellido = sc.nextLine();
+		    al[pos].setApellido(apellido);
+		    dni = (long)enteroValido("Ingrese el nuevo DNI del docente: ", 10000000, 99999999);
+		    al[pos].setDni(dni);
+		    vHora = doubleValido("Ingrese por hora a cobrar: ", 0);
+		    al[pos].setValorH(vHora);
+		    horas = enteroValido("Ingrese la cantidad de horas trabajadas por mes", 0, 100);
+		    al[pos].setHoras(horas);
+		    al[pos].setSalario();
+			System.out.println("DATOS ACTUALIZADOS\nNombre completo: "+al[pos].getNombre()+" "+al[pos].getApellido()+"\nDNI: "+al[pos].getDni()+"\nRemuneracion por hora: $"+al[pos].getValorHora()+"\nTotal de horas de catedra: "+al[pos].getHoras()+"\nSalario: "+al[pos].getSalario());
+            seguir = false;
+	     }	
+       
+       } while(seguir);
+
+}
+}
+
